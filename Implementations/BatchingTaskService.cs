@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TaskService.Interfaces;
 
@@ -35,7 +36,7 @@ namespace TaskService.Implementations
             }
 
             var batch = _input.Skip(_batchCount * _batchThreshold).Take(_batchThreshold);
-            _batchCount++;
+            Interlocked.Increment(ref _batchCount);
             return batch;
         }
 
